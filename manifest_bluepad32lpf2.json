@@ -1,0 +1,14 @@
+{
+  "name": "BluePad32 for Word Blocks Mindstorms",
+  "version": "1.0",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "firmware/bluepad32_lpf2/bootloader.bin", "offset": 4096 },
+        { "path": "firmware/bluepad32_lpf2/partition-table.bin", "offset": 32768 },
+        { "path": "firmware/bluepad32_lpf2/app-template.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}

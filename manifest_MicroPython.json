@@ -1,0 +1,11 @@
+{
+  "name": "MicroPython version 1.19.1 with ulab+lvgl+uartremote libraries",
+  "version": "1.19.1",
+  "home_assistant_domain": "slim_player",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "firmware/firmware_ESP32_ULAB_LVGL_SPIRAM_20220716-1006.bin", "offset": 4096 }]
+    }
+  ]
+}

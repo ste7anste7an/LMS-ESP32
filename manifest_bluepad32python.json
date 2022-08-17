@@ -1,0 +1,16 @@
+{
+  "name": "BluePad32 for Word Blocks Mindstorms",
+  "version": "1.0",
+  "home_assistant_domain": "slim_player",
+  "funding_url": "https://esphome.io/guides/supporters.html",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        { "path": "firmware/bluepad32_python/bootloader.bin", "offset": 4096 },
+        { "path": "firmware/bluepad32_python/partition-table.bin", "offset": 32768 },
+        { "path": "firmware/bluepad32_python/app-template.bin", "offset": 65536 }
+      ]
+    }
+  ]
+}
