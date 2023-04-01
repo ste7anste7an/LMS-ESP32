@@ -15,7 +15,7 @@ The TU is fitted with a NeoPixel LED connected to GPIO32.
 During test serial output is provided on the Tester unit. Some examples of typical output can be seen [here](#example-output-of-tu).
 ## Firmware
 
-This firmware needs to be flashed on all the modules: (micropython_lms_esp32_20230401.bin)[micropython_lms_esp32_20230401.bin]. This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000. 
+This firmware needs to be flashed on all the modules: [micropython_lms_esp32_20230401.bin](https://github.com/ste7anste7an/LMS-ESP32/raw/gh-pages/micropython_lms_esp32_20230401.bin). This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000. 
 
 ## Connecting TU to TUD
 
