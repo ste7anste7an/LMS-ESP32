@@ -5,77 +5,123 @@ from neopixel import NeoPixel
 from time import sleep_ms
 
 pins = [5,22,25,2,26,27,32,33,4,21,23,0,12,13,14,15]
-
+pin_led=32
 tx_pin=19
 rx_pin=18
 baudrate=115200
 uart=UART(1,baudrate=baudrate,rx=rx_pin,tx=tx_pin,timeout=1)
 
+def print_pins(state):
+    #state=[1 if p in states else 0 for p in pins]
+    print("[*] -------------------------------------")
+    print('[*] '+''.join(["GP%02d "%p for p in pins[:8]]))
+    print('[*] '+''.join([" [%1s] "%s for s in state[:8]]))
+    print('[*] '+''.join(["GP%02d "%p for p in pins[8:]]))
+    print('[*] '+''.join([" [%1s] "%s for s in state[8:]]))
+    
 def all_pins_in():
     for p in pins:
         pin = Pin(p, Pin.IN, pull=Pin.PULL_DOWN)
         
 
 def test_pin(pin_test,state=1):
-    errors=[]
+    lowhigh=['low','high']
+    states=[]
     vals={}
+    # if testing for 1, pin in pull down
+    # if testing for 0, pin in pull up
+    pull=Pin.PULL_DOWN if state==1 else Pin.PULL_UP
     for p in pins:
-        pin = Pin(p, Pin.IN, pull=Pin.PULL_DOWN)
+        pin = Pin(p, Pin.IN, pull=pull)
         val=pin.value()
         vals[p]=val
+    #if pin_test in [4,5]:
     #print("vals",vals)
-    test_result=0
+    pin_error=0
+    pins_short=0
+    
     for p in pins:
         if p==pin_test:
-            test_result+=not vals[p]==state
+            pin_error=not vals[p]==state
+            states.append('V' if pin_error==0 else 'X')
+                
         else:
-            test_result+=not (vals[p]==1-state)
-    #print("test_result",test_result)
-    return test_result
-            
+            if not (p==0 and state==1): # GPIO0 is always pull up
+                pin_short=not (vals[p]==1-state)
+                states.append('.' if pin_short==0 else 'S')
+                pins_short+=pin_short
+            else:
+                states.append('1')
+    if pin_error or pins_short>0:
+        print('\n[!] Error when setting pin GP%02d %s'%(pin_test,lowhigh[state]))
+    if pins_short>0:
+        print("[!] One or more pins are short circuited (S=short, .=ok, X=not connected, V=ok, 1=always high)\n")
+    if pin_error or pins_short>0:
+        print()
+        print_pins(states)
+        
+    return pin_error,pins_short
+
+
+
+
 # wait for start message from DUT
 while True:
+  print("\n\n*********************")
+  print("* Ready for testing *")
+  print("* Insert DUT in rig *")
+  print("*********************")
+  np=NeoPixel(Pin(pin_led),1)
+  np[0]=(50,50,0)
+  np.write()
   all_pins_in()
   start=False
   while not start:
       msg=uart.read()
       if msg==b'start':
           start=True
+          np[0]=(0,0,0)
+          np.write()
+          Pin(pin_led,Pin.IN)
+  
   uart.write('ack')
-  print("start testing")
+  #print("start testing")
   testing=True
-  test_result=0
-        
+  total_errors=0
   while testing:
     r=uart.read()
     if r:
         r=r.decode('ascii')
-        print("rcv",r)
+        #print("rcv",r)
         if len(r)>=1:
             if r=='stop':
                 testing=False
-            if r[0]=='H':
+            if r[0]=='H' or r[0]=='L':
+                state=1 if r[0]=='H' else 0
                 pin=int(r[1:])
-                print("test pin high",pin)
-                test_result+=test_pin(pin,state=1)
-                uart.write('ack')
-            if r[0]=='L':
-                pin=int(r[1:])
-                print("test pin low",pin)
-                test_result+=test_pin(pin,state=0)
+                pin_error,pin_short=test_pin(pin,state=state)
+                total_errors+=pin_error+pin_short
                 uart.write('ack')
             if r[0]=='I':
-                print("ID=",r.split('=')[1])
+                print("[*] Testing ID %s"%r.split('=')[1])
                 uart.write('ack')
-  print("test finished")
-  print("test_result=",test_result)
-  np=NeoPixel(Pin(32),1)
-  if test_result>0:
-      np[0]=(100,0,0)
+  if total_errors==0:
+     print("[*] Test passed succesfully")
+  else:
+     print("\n[!] Test failed with %d error(s)"%total_errors)
+  np=NeoPixel(Pin(pin_led),1)
+  if total_errors>0:
+      for i in range(5):
+          np[0]=(100,0,0)
+          np.write()
+          sleep_ms(200)
+          np[0]=(0,0,0)
+          np.write()
+          sleep_ms(200)          
   else:
       np[0]=(0,100,0)
-  np.write()
-  sleep_ms(1000)
+      np.write()
+      sleep_ms(1000)
   np[0]=(0,0,0)
   np.write()
-Pin(32,Pin.IN)
+  Pin(pin_led,Pin.IN)

@@ -26,9 +26,9 @@ def write_gpio(pin,val):
     p.value(val)
     
 def test_pin(pin,state=1):
-    # set Pin(pin) high, other low
+    # set Pin(pin) high, other float
     for p in pins:
-        write_gpio(p,1-state)
+        pp = Pin(p, Pin.IN, pull=None)
     write_gpio(pin,state)
     if state==1:
         s='H'
@@ -49,11 +49,12 @@ def test_program():
     write_id()
     for p in pins:
         test_pin(p,state=1)
+        sleep_ms(10)
     for p in pins:
         test_pin(p,state=0)
-    # set pin_led to read
+        sleep_ms(10)
+    # set pin_led as IN 
     Pin(pin_led, Pin.IN)
-        
     uart.write('stop')
     
 sleep_ms(200) # wait    
