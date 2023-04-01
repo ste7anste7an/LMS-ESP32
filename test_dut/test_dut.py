@@ -57,15 +57,16 @@ def test_program():
     Pin(pin_led, Pin.IN)
     uart.write('stop')
     
-sleep_ms(200) # wait    
-start = ticks_ms()
-uart.read() # empty read buf
-uart.write('start')
-ack=False
-while ticks_diff(ticks_ms(), start) < 1000 and not ack:
-    a=uart.read()
-    ack = a==b'ack'
-if ack:
-    test_program()
-else:
-    print('continue')
+def start_test():
+  sleep_ms(200) # wait    
+  start = ticks_ms()
+  uart.read() # empty read buf
+  uart.write('start')
+  ack=False
+  while ticks_diff(ticks_ms(), start) < 1000 and not ack:
+      a=uart.read()
+      ack = a==b'ack'
+  if ack:
+      test_program()
+  else:
+      print('ready to start coding')
