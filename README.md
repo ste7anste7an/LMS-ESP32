@@ -39,32 +39,29 @@ This firmware needs to be flashed on all the modules: [micropython_lms_esp32_202
 
 3) GPIO
 
-|TU GPIO | DUT GPIO | NeoPixel|
-|-------|--------|------|
-|GPIO32 | | Data |
-|-------|--------|------|
-|GPIO0  |GPIO0 ||
-|GPIO2  |GPIO2 ||
-|GPIO4  |GPIO4 ||
-|GPIO5  |GPIO5 ||
-|GPIO12  |GPIO12 ||
-|GPIO13  |GPIO13 ||
-|GPIO14  |GPIO14 ||
-|GPIO15  |GPIO15 ||
-|GPIO21  |GPIO21 ||
-|GPIO22  |GPIO22 ||
-|GPIO23  |GPIO23 ||
-|GPIO25  |GPIO25 ||
-|GPIO26  |GPIO26 ||
-|GPIO27  |GPIO27 ||
-|GPIO32  |GPIO32 ||
-|GPIO33  |GPIO33 ||
-|-------|--------|------|
+|TU GPIO | DUT GPIO 
+|-------|--------|
+|GPIO0  |GPIO0 |
+|GPIO2  |GPIO2 |
+|GPIO4  |GPIO4 |
+|GPIO5  |GPIO5 |
+|GPIO12  |GPIO12 |
+|GPIO13  |GPIO13 |
+|GPIO14  |GPIO14 |
+|GPIO15  |GPIO15 |
+|GPIO21  |GPIO21 |
+|GPIO22  |GPIO22 |
+|GPIO23  |GPIO23 |
+|GPIO25  |GPIO25 |
+|GPIO26  |GPIO26 |
+|GPIO27  |GPIO27 |
+|GPIO32  |GPIO32 |
+|GPIO33  |GPIO33 |
 
 
 ## Internals
 
-Two modules are integrated in the firmware: `test_dut.py` and `tester.py` for the DUT and TU device respectively.
+Two Python modules are incorporated as frozen modules in the firmware: `test_dut.py` and `tester.py` for the DUT and TU device respectively. The `boot.py` file imports the `test_dut` module and starts the test when the DUT is powered on or rebooted.
 
 1) Handshake
 
