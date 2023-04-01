@@ -13,6 +13,54 @@ The TU is fitted with a NeoPixel LED connected to GPIO32.
 - Red: 5 brief flashes, test failed.
 
 During test serial output is provided on the Tester unit. Some examples of typical output can be seen [here](#example-output-of-tu).
+## Firmware
+
+This firmware needs to be flashed on all the modules: (micropython_lms_esp32_20230401.bin)[micropython_lms_esp32_20230401.bin]. This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000. 
+
+## Connecting TU to TUD
+
+![ESP32 pin out](images/lms_esp32_pinout.jpeg)
+
+1) NeoPixel
+
+|TU INMP441 |  NeoPixel|
+|-------|------|
+|SD | Data |
+| VCC | VCC |
+| GND | GND|
+
+
+2) UART
+
+|TU GPIO | DUT GPIO | 
+|--------|----------|
+|GPIO18| GPIO19 |
+|GPIO19| GPIO18 |
+
+3) GPIO
+
+|TU GPIO | DUT GPIO | NeoPixel|
+|-------|--------|------|
+|GPIO32 | | Data |
+|-------|--------|------|
+|GPIO0  |GPIO0 ||
+|GPIO2  |GPIO2 ||
+|GPIO4  |GPIO4 ||
+|GPIO5  |GPIO5 ||
+|GPIO12  |GPIO12 ||
+|GPIO13  |GPIO13 ||
+|GPIO14  |GPIO14 ||
+|GPIO15  |GPIO15 ||
+|GPIO21  |GPIO21 ||
+|GPIO22  |GPIO22 ||
+|GPIO23  |GPIO23 ||
+|GPIO25  |GPIO25 ||
+|GPIO26  |GPIO26 ||
+|GPIO27  |GPIO27 ||
+|GPIO32  |GPIO32 ||
+|GPIO33  |GPIO33 ||
+|-------|--------|------|
+
 
 ## Internals
 
