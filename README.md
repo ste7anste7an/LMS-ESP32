@@ -29,7 +29,7 @@ import tester
 *********************
 ```
 - connect a DUT 
-- the test should be executed automatically
+- the test should be executed automatically as soon as the DUT gets power.
 
 ## Firmware
 
