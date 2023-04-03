@@ -33,7 +33,10 @@ import tester
 
 ## Firmware
 
-This firmware needs to be flashed on all the modules: [micropython_lms_esp32_20230401.bin](https://github.com/ste7anste7an/LMS-ESP32/raw/gh-pages/micropython_lms_esp32_20230401.bin). This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000. 
+### DUT and production firmware
+This firmware needs to be flashed on all the modules: [micropython_lms_esp32_20230401.bin](https://github.com/ste7anste7an/LMS-ESP32/raw/gh-pages/micropython_lms_esp32_20230401.bin). This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000.
+### Tester firmware
+This firmware needs to be flashed only on the Tester Unit (TU): [micropython_lms_esp32_tester_20230402.bin](https://github.com/ste7anste7an/LMS-ESP32/raw/gh-pages/micropython_lms_esp32_tester_20230402.bin). This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000. 
 
 ## Connecting TU to TUD
 
