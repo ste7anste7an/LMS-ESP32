@@ -13,6 +13,24 @@ The TU is fitted with a NeoPixel LED connected to GPIO32.
 - Red: 5 brief flashes, test failed.
 
 During the test serial output is provided on the Tester unit. Some examples of typical output can be seen [here](#example-output-of-tu).
+
+## Executing the test
+- Flash the same firmware on all devices (both the TU as well as the DUTs). 
+- Connect a serial monitor (with logging to a file) at 115200 bit/s to the USB of the TU 
+- Wait for the REPL prompt to show and execute this command:
+```
+import tester
+```
+- the following prompt will be visible:
+```
+*********************
+* Ready for testing *
+* Insert DUT in rig *
+*********************
+```
+- connect a DUT 
+- the test should be executed automatically
+
 ## Firmware
 
 This firmware needs to be flashed on all the modules: [micropython_lms_esp32_20230401.bin](https://github.com/ste7anste7an/LMS-ESP32/raw/gh-pages/micropython_lms_esp32_20230401.bin). This can be done using the online tool: [https://espressif.github.io/esptool-js/](https://espressif.github.io/esptool-js/). Select port, erase flash and upload the firmware file and flash at 0x1000. 
