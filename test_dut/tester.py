@@ -21,7 +21,7 @@ def print_pins(state):
     
 def all_pins_in():
     for p in pins:
-        pin = Pin(p, Pin.IN, pull=Pin.PULL_DOWN)
+        pin = Pin(p, Pin.IN, pull=Pin.PULL_UP)
         
 
 def test_pin(pin_test,state=1):
